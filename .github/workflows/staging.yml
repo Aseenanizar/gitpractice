@@ -1,22 +1,17 @@
-name: Staging Environment
+name: Test Environment Variables and Secrets
 
 on:
   push:
     branches: [master]
 
 jobs:
-  print_env:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Print Environment Variables
+      - name: Print Environment Variables and Secrets
         run: |
-          echo "Environment: staging"
-          echo "ENV_VAR_1: ${{ env.ENV_VAR_1 }}"
-          echo "ENV_1: ${{ secrets.ENV_1 }}"
-      - name: Debug
-        run: |
-          echo "Environment variables:"
-          env
-          echo "Secrets:"
-          echo $GITHUB_TOKEN
+          echo "Environment Variable (ENV_VAR_1): ${{ env.ENV_VAR_1 }}"
+          echo "Secret (ENV_1): ${{ secrets.ENV_1 }}"
+          # Use the secret in a command
+          echo "Using the secret: $(echo "${{ secrets.ENV_1 }}" | base64 -d)"
