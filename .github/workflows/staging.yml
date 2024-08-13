@@ -2,7 +2,7 @@ name: Staging Environment
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   print_env:
@@ -14,3 +14,9 @@ jobs:
           echo "Environment: staging"
           echo "ENV_VAR_1: ${{ env.ENV_VAR_1 }}"
           echo "ENV_1: ${{ secrets.ENV_1 }}"
+      - name: Debug
+        run: |
+          echo "Environment variables:"
+          env
+          echo "Secrets:"
+          echo $GITHUB_TOKEN
