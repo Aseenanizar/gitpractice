@@ -1,11 +1,15 @@
 name: Test Environment Variables and Secrets
 
 on:
-  push:
-    branches: [master]
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'release'
 
 jobs:
   test:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,5 +17,5 @@ jobs:
         run: |
           echo "Environment Variable (ENV_VAR_1): ${{ env.ENV_VAR_1 }}"
           echo "Secret (ENV_1): ${{ secrets.ENV_1 }}"
-          # Use the secret in a command
-          echo "Using the secret: $(echo "${{ secrets.ENV_1 }}" | base64 -d)"
+          # Avoid exposing secrets directly in logs
+          echo "Using the secret: $(echo "${{ secrets.ENV_1 }}" | base64 -d)" > /dev/null
