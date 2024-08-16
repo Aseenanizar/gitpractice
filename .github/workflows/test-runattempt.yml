@@ -1,0 +1,14 @@
+name: Print GitHub Context
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print_context:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Print GitHub Context
+      run: |
+        echo "GitHub Run Number: ${{ github.run_number }}"
+        echo "GitHub Run Attempt: ${{ github.run_attempt }}"
