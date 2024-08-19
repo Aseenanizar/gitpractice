@@ -1,1 +1,1 @@
-alert("welcome to java script Bla bla fvfv");
+alert("welcome to java script Bla bla");
