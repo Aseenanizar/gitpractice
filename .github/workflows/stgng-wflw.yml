@@ -1,7 +1,6 @@
 name: Build-Deploy-Stg
 
 on:
-  
   pull_request:
     types:
       - closed
@@ -9,16 +8,15 @@ on:
       - 'master'
 
 env:
-
-  # dev/stg/test/prodごとに設定する環境変数  
+  # dev/stg/test/prodごとに設定する環境変数
   WORKLOAD_ACCOUNT_ID: "358859468488"  # aws account id
-  AWS_ROLE_TO_ASSUME: "arn:aws:iam::358859468488:role/RL-QI-BFF-STG-GITHUB"   # aws role oidc
+  AWS_ROLE_TO_ASSUME: "arn:aws:iam::358859468488:role/RL-QI-BFF-STG-GITHUB"  # aws role oidc
   AWS_REGION: "ap-northeast-1"
-  
+
 jobs:
   build_and_push:
-  if: github.event.pull_request.merged == true
-  runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -27,13 +25,11 @@ jobs:
       - name: 01.checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch_name }} 
-
+          ref: ${{ github.event.inputs.branch_name }}
       - name: 02.configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }} 
-
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
       - name: 03.set IMAGE_TAG value
         run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
