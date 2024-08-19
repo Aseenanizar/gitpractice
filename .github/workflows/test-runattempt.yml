@@ -14,6 +14,7 @@ env:
   # dev/stg/test/prodごとに設定する環境変数  
   WORKLOAD_ACCOUNT_ID: "358859468488"  # aws account id
   AWS_ROLE_TO_ASSUME: "arn:aws:iam::358859468488:role/RL-QI-BFF-STG-GITHUB"   # aws role oidc
+  AWS_REGION: "ap-northeast-1"
   
 jobs:
   build_and_push:
