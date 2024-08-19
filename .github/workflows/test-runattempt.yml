@@ -1,4 +1,4 @@
-name: Build-Deploy-Stg
+name: Test
 
 on:
   
